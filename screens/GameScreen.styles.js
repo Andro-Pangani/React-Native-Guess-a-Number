@@ -39,4 +39,27 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
+
+  guessList: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.card_bg,
+    height: '30%',
+    marginTop: 10,
+    paddingHorizontal: 5,
+  },
+
+  listItem: {
+    marginVertical: 8,
+    padding: 5,
+    backgroundColor: 'rgba(0,84,255,1)',
+    borderRadius: 5,
+  },
+  text: {
+    fontFamily: 'press-start',
+    paddingTop: 5,
+    fontSize: 15,
+    color: 'white',
+  },
 });

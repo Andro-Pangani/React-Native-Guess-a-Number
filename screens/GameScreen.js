@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, ScrollView, Text, View } from 'react-native';
 import { NumberComponent } from '../components/numberComponent';
 import { ButtonPositive } from '../customComponents/buttonPositive';
 import { ButtonNegative } from '../customComponents/buttonNegative';
@@ -17,15 +17,17 @@ const generateRandomBetween = (min, max, exclude) => {
     return rndNum;
   }
 };
+
+// Game Screen Components
 export const GameScreenComponent = ({
   userChoice,
   onGameOver,
   exitGameHandler,
 }) => {
-  const [currentGuess, setCurrentGues] = useState(
-    generateRandomBetween(1, 100, userChoice)
-  );
+  const initialGuess = generateRandomBetween(1, 100, userChoice);
+  const [currentGuess, setCurrentGues] = useState(initialGuess);
 
+  const [allGuesses, setAllGuesses] = useState([initialGuess]);
   const [guessRounds, setGuesRounds] = useState(0);
 
   const currentLow = useRef(1);
@@ -51,7 +53,7 @@ export const GameScreenComponent = ({
     if (direction === 'LOWER') {
       currentHigh.current = currentGuess;
     } else if (direction === 'GREATER') {
-      currentLow.current = currentGuess;
+      currentLow.current = currentGuess + 1;
     }
     const nextNumber = generateRandomBetween(
       currentLow.current,
@@ -59,6 +61,7 @@ export const GameScreenComponent = ({
       currentGuess
     );
     setCurrentGues(nextNumber);
+    setAllGuesses((guesses) => [[nextNumber], ...guesses]);
     setGuesRounds((currentRounds) => setGuesRounds(currentRounds + 1));
   };
 
@@ -84,6 +87,23 @@ export const GameScreenComponent = ({
           />
         </Card>
       </Card>
+      <View style={styles.guessList}>
+        <ScrollView>
+          {allGuesses.map((guess, index) => (
+            <ListItem guess={guess} index={index} key={guess} />
+          ))}
+        </ScrollView>
+      </View>
+    </View>
+  );
+};
+
+const ListItem = ({ guess, index }) => {
+  let color = index === 0 ? 'yellow' : 'white';
+
+  return (
+    <View style={styles.listItem}>
+      <Text style={{ ...styles.text, color: color }}>{guess}</Text>
     </View>
   );
 };
