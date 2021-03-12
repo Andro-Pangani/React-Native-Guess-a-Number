@@ -23,7 +23,7 @@ export default function App() {
   //App Loading ... setup
 
   const [isLoaded] = useFonts({
-    'press-start': './assets/fonts/PressStart2P-Regular.ttf',
+    'press-start': require('./assets/fonts/PressStart2P-Regular.ttf'),
   });
 
   const handleGameStart = (number) => {
@@ -49,6 +49,7 @@ export default function App() {
   if (!isLoaded) {
     console.log(isLoaded, 'fontsLoaded');
     return <AppLoading />;
+    // return null;
   } else if (userNumber && gameRounds == 0) {
     content = (
       <GameScreenComponent

@@ -26,15 +26,15 @@ export const GameScreenComponent = ({
     generateRandomBetween(1, 100, userChoice)
   );
 
-  const [guesRounds, setGuesRounds] = useState(0);
+  const [guessRounds, setGuesRounds] = useState(0);
 
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
 
   useEffect(() => {
-    console.log('rounds', guesRounds);
+    console.log('rounds', guessRounds);
     if (currentGuess == userChoice) {
-      onGameOver(guesRounds);
+      onGameOver(guessRounds);
       console.log('**** Yea Guessed ****', currentGuess);
     }
   }, [currentGuess]);
@@ -74,7 +74,7 @@ export const GameScreenComponent = ({
         >
           <Text style={styles.exitTitle}>Exit</Text>
         </ButtonWrapper>
-        <Text style={styles.title}>Guess: {guesRounds}</Text>
+        <Text style={styles.title}>Guess: {guessRounds}</Text>
         <NumberComponent style={styles.number} value={currentGuess} />
         <Card style={styles.card}>
           <ButtonNegative
