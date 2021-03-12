@@ -1,21 +1,83 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import AppLoading from 'expo-app-loading';
+import { HeaderSection } from './components/HeaderSection';
+import { GameScreenComponent } from './screens/GameScreen';
+import { StartGameScreen } from './screens/StartGameScreen';
+
+import { GameOverScreen } from './screens/GameOverScreen';
+
+//Fonts
+import { useFonts } from '@use-expo/font';
+
+// const fetchFonts = async () => {
+//   await Font.loadAsync({
+//     'press-start': require('./assets/fonts/PressStart2P-Regular.ttf'),
+//   });
+// };
 
 export default function App() {
+  const [userNumber, setUserNumber] = useState(null);
+  const [gameRounds, setGameRounds] = useState(0);
+
+  //App Loading ... setup
+
+  const [isLoaded] = useFonts({
+    'press-start': './assets/fonts/PressStart2P-Regular.ttf',
+  });
+
+  const handleGameStart = (number) => {
+    setUserNumber(number);
+    setGameRounds(0);
+  };
+
+  const gameOverHandler = (numOfRounds) => {
+    setGameRounds(numOfRounds);
+  };
+
+  const restartGame = () => {
+    setUserNumber(null);
+    setGameRounds(0);
+  };
+
+  const exitGameHandler = () => {
+    setUserNumber(null);
+  };
+
+  let content = <StartGameScreen handleGameStart={handleGameStart} />;
+
+  if (!isLoaded) {
+    console.log(isLoaded, 'fontsLoaded');
+    return <AppLoading />;
+  } else if (userNumber && gameRounds == 0) {
+    content = (
+      <GameScreenComponent
+        userChoice={userNumber}
+        onGameOver={gameOverHandler}
+        exitGameHandler={exitGameHandler}
+      />
+    );
+  } else if (gameRounds > 0) {
+    content = (
+      <GameOverScreen
+        userNumber={userNumber}
+        rounds={gameRounds}
+        onGameOver={restartGame}
+      />
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.screen}>
+      <HeaderSection title={'Guess a Number'} />
+      {content}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#1B5DF7',
   },
 });
