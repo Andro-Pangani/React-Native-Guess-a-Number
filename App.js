@@ -8,13 +8,7 @@ import { StartGameScreen } from './screens/StartGameScreen';
 import { GameOverScreen } from './screens/GameOverScreen';
 
 //Fonts
-import { useFonts } from '@use-expo/font';
-
-// const fetchFonts = async () => {
-//   await Font.loadAsync({
-//     'press-start': require('./assets/fonts/PressStart2P-Regular.ttf'),
-//   });
-// };
+import { useFonts } from 'expo-font';
 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);

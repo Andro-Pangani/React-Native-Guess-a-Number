@@ -22,5 +22,6 @@ const styles = StyleSheet.create({
   numberText: {
     color: 'white',
     fontSize: 28,
+    fontFamily: 'press-start',
   },
 });

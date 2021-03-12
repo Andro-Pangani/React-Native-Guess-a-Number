@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Image,
 } from 'react-native';
 import { NumberComponent } from '../components/numberComponent';
 import { colors } from '../Constants/colors';
@@ -79,6 +80,10 @@ export const StartGameScreen = (props) => {
       }}
     >
       <View style={styles.screen}>
+        <Image
+          source={require('../assets/cyberpank.jpg')}
+          style={styles.bgImage}
+        />
         <Text style={styles.title}>Start New Game</Text>
         <Card style={styles.inputContainer}>
           <Input
@@ -93,15 +98,19 @@ export const StartGameScreen = (props) => {
             value={enteredNumber}
           />
           <View style={styles.buttonContainer}>
-            <ButtonWrapper style={styles.buttonReset}>
-              <TouchableOpacity onPress={resetInputHandler}>
-                <Text style={styles.resetText}>Reset</Text>
-              </TouchableOpacity>
+            <ButtonWrapper
+              style={styles.buttonReset}
+              onPress={resetInputHandler}
+            >
+              {/* <TouchableOpacity onPress={resetInputHandler}> */}
+              <Text style={styles.resetText}>Reset</Text>
+              {/* </TouchableOpacity> */}
             </ButtonWrapper>
-            <ButtonWrapper style={styles.buttonConfirm}>
-              <TouchableOpacity onPress={confirmInputHandler}>
-                <Text style={styles.confirmText}>Confirm</Text>
-              </TouchableOpacity>
+            <ButtonWrapper
+              style={styles.buttonConfirm}
+              onPress={confirmInputHandler}
+            >
+              <Text style={styles.confirmText}>Confirm</Text>
             </ButtonWrapper>
           </View>
         </Card>

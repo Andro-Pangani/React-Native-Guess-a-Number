@@ -32,10 +32,8 @@ export const GameScreenComponent = ({
   const currentHigh = useRef(100);
 
   useEffect(() => {
-    console.log('rounds', guessRounds);
     if (currentGuess == userChoice) {
       onGameOver(guessRounds);
-      console.log('**** Yea Guessed ****', currentGuess);
     }
   }, [currentGuess]);
 
@@ -62,7 +60,6 @@ export const GameScreenComponent = ({
     );
     setCurrentGues(nextNumber);
     setGuesRounds((currentRounds) => setGuesRounds(currentRounds + 1));
-    console.log(direction);
   };
 
   return (

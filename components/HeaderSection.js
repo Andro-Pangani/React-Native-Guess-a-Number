@@ -11,6 +11,7 @@ export const HeaderSection = ({ title }) => {
 
 const styles = StyleSheet.create({
   headerSection: {
+    position: 'relative',
     width: '100%',
     height: 90,
     paddingTop: 20,

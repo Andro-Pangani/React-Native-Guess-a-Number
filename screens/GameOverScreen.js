@@ -6,8 +6,6 @@ import { ButtonWrapper } from '../customComponents/buttonWrapper';
 import { Card } from '../customComponents/card';
 
 export const GameOverScreen = ({ rounds, onGameOver, userNumber }) => {
-  console.log(rounds, 'rounds');
-
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>The Game is over</Text>
