@@ -4,27 +4,43 @@ import { colors } from '../Constants/colors';
 
 export const ButtonNegative = ({ style, onPress, title }) => {
   return (
-    <View style={{ ...styles.container, ...style }}>
-      <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={{ ...styles.container, ...style }}>
         <Text style={styles.text}>{title}</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 8,
-    elevation: 10,
     backgroundColor: '#0851FF',
     borderColor: 'blue',
+    // overflow: 'hidden',
   },
 
   text: {
-    fontSize: 10,
-    color: colors.red,
+    fontSize: 6,
+    paddingTop: 5,
+    color: 'rgba(247,230,64,.6)',
+    fontFamily: 'press-start',
+  },
+
+  artborder: {
+    width: '140%',
+    height: '190%',
+    borderRadius: 5,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(219,25,255,.1)',
+    borderColor: 'red',
+    borderWidth: 1,
+    borderRightWidth: 0,
   },
 });

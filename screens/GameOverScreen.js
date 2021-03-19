@@ -8,18 +8,20 @@ import { Card } from '../customComponents/card';
 export const GameOverScreen = ({ rounds, onGameOver, userNumber }) => {
   return (
     <View style={styles.screen}>
-      <Text style={styles.title}>The Game is over</Text>
-      <Card>
+      <Card style={styles.cardStyles}>
         <Text style={styles.numberTitle}>Number was</Text>
-        <NumberComponent style={styles.number} value={userNumber} />
-        <View style={styles.guessesContainer}>
-          <Text style={styles.guessNumber}>{rounds}</Text>
-          <Text style={styles.guessText}>guesses</Text>
-        </View>
-        <ButtonWrapper onPress={onGameOver}>
-          <Text style={styles.buttonText}>Start New Game</Text>
-        </ButtonWrapper>
+        <NumberComponent style={styles.number}>
+          <Text style={styles.number}>{userNumber}</Text>
+        </NumberComponent>
       </Card>
+      <View style={styles.guessesContainer}>
+        <Text style={styles.title}>The Game is over in</Text>
+        <Text style={styles.guessNumber}>{rounds}</Text>
+        <Text style={styles.guessText}>guesses</Text>
+      </View>
+      <ButtonWrapper style={styles.newGame} onPress={onGameOver}>
+        <Text style={styles.buttonText}>New Game</Text>
+      </ButtonWrapper>
     </View>
   );
 };
@@ -29,43 +31,76 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'black',
   },
   title: {
-    marginBottom: 8,
-    color: colors.card_bg,
-    backgroundColor: colors.confirmText,
-    paddingHorizontal: 22,
-    padding: 5,
+    color: 'rgba(56,183,235,1)',
+    fontFamily: 'press-start',
+    textAlign: 'center',
+    lineHeight: 15,
+    fontSize: 10,
     borderRadius: 5,
+  },
+  cardStyles: {
+    backgroundColor: 'rgba(89,139,247,.1)',
+    borderColor: 'rgba(56,183,235,.2)',
   },
   numberTitle: {
-    color: 'white',
+    color: 'rgba(56,183,235,1)',
+    fontFamily: 'press-start',
     marginBottom: 10,
+    fontSize: 14,
   },
   number: {
-    color: colors.confirmText,
-    fontSize: 15,
+    color: 'rgba(56,183,235,1)',
+    fontSize: 28,
+    paddingTop: 10,
     marginBottom: 10,
+    borderColor: 'rgba(38,60,158,.2)',
+    fontFamily: 'press-start',
   },
   guessText: {
-    color: colors.confirmText,
+    color: 'rgba(56,183,235,1)',
+    fontFamily: 'press-start',
+    fontSize: 10,
+    paddingBottom: 10,
   },
+
   guessNumber: {
-    color: 'white',
+    color: 'rgba(77,130,247,1)',
+    fontFamily: 'press-start',
+    fontSize: 10,
+    backgroundColor: 'rgba(28,96,255,.1)',
+    borderRadius: 3,
+    paddingTop: 10,
+    marginBottom: 5,
   },
   guessesContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignContent: 'center',
     alignItems: 'center',
     marginBottom: 15,
+    width: '55%',
+    // backgroundColor: 'gray',
+    padding: 15,
+    marginTop: 45,
     borderWidth: 1,
-    borderColor: colors.confirmLight,
+    borderColor: 'rgba(0,0,0,0)',
     borderRadius: 5,
-    paddingHorizontal: 8,
-    width: 100,
+  },
+  newGame: {
+    backgroundColor: 'rgba(77,130,247,1)',
+    paddingVertical: 5,
+    marginTop: 30,
+    borderRadius: 5,
   },
   buttonText: {
     padding: 3,
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
+    paddingTop: 8,
+    color: 'rgba(235,225,33,1)',
+    fontSize: 10,
+    fontFamily: 'press-start',
   },
 });

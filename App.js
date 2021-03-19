@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AppLoading from 'expo-app-loading';
+import { Ionicons } from '@expo/vector-icons';
 import { HeaderSection } from './components/HeaderSection';
 import { GameScreenComponent } from './screens/GameScreen';
 import { StartGameScreen } from './screens/StartGameScreen';
@@ -72,6 +73,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   screen: {
+    position: 'relative',
     flex: 1,
     backgroundColor: '#1B5DF7',
   },

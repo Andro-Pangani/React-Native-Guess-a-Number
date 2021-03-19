@@ -1,10 +1,18 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
-import { Alert, ScrollView, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  Alert,
+  Animated,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { NumberComponent } from '../components/numberComponent';
 import { ButtonPositive } from '../customComponents/buttonPositive';
 import { ButtonNegative } from '../customComponents/buttonNegative';
 import { Card } from '../customComponents/card';
 import { styles } from './GameScreen.styles';
+import { LinearGradient } from 'expo-linear-gradient';
 import { ButtonWrapper } from '../customComponents/buttonWrapper';
 
 const generateRandomBetween = (min, max, exclude) => {
@@ -67,28 +75,87 @@ export const GameScreenComponent = ({
 
   return (
     <View style={styles.screen}>
-      <Card>
-        <ButtonWrapper
-          style={styles.exitButton}
-          onPress={exitGameHandler.bind(this)}
-        >
-          <Text style={styles.exitTitle}>Exit</Text>
-        </ButtonWrapper>
-        <Text style={styles.title}>Guess: {guessRounds}</Text>
-        <NumberComponent style={styles.number} value={currentGuess} />
+      <LinearGradient
+        style={styles.screen_bg}
+        colors={['rgba(247,230,64,1)', 'rgba(24,21,33,.8)']}
+      ></LinearGradient>
+      <Card style={styles.card_body}>
+        <TouchableOpacity onPress={exitGameHandler.bind(this)}>
+          <LinearGradient
+            colors={[
+              'rgba(255,239,92,.1)',
+              'rgba(255,239,92,.1)',
+              'rgba(255,239,92,.1)',
+            ]}
+            start={{ x: 0, y: 0.5 }}
+            end={{ x: 1, y: 0.5 }}
+            style={styles.exitButton}
+          >
+            <Text style={styles.exitTitle}>Exit</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+        {/* <Text style={styles.guess_title}>
+          Guess:<Text style={styles.guess_count}>{guessRounds}</Text>
+        </Text> */}
+        {/* <View style={styles.number_container}> */}
+        <NumberComponent style={styles.number}>
+          <LinearGradient
+            colors={['rgba(64,122,247,.3)', 'rgba(64,122,247,.2)']}
+            style={styles.number_dash_left}
+          ></LinearGradient>
+          <LinearGradient
+            colors={[
+              'rgba(64,122,247,.3)',
+              // 'rgba(56,56,56,.6)',
+              // 'rgba(56,56,56,.4)',
+              'rgba(64,122,247,.2)',
+            ]}
+            style={styles.number_dash_right}
+          ></LinearGradient>
+          <View style={styles.number_value_container}>
+            <Text style={styles.number_value_shadow}>{currentGuess}</Text>
+            <Text style={styles.numberValue}>{currentGuess}</Text>
+          </View>
+        </NumberComponent>
+
         <Card style={styles.card}>
-          <ButtonNegative
-            onPress={nextGuessHandler.bind(this, 'LOWER')}
-            title={'LOWER'}
-          />
           <ButtonPositive
+            style={styles.btn_greater}
             onPress={nextGuessHandler.bind(this, 'GREATER')}
             title={'GREATER'}
+          />
+          <ButtonNegative
+            style={styles.btn_lower}
+            onPress={nextGuessHandler.bind(this, 'LOWER')}
+            title={'LOWER'}
           />
         </Card>
       </Card>
       <View style={styles.guessList}>
-        <ScrollView>
+        <LinearGradient
+          colors={['rgba(86,77,247,0)', 'rgba(247,68,92,0)']}
+          start={{
+            x: 0,
+            y: 0,
+          }}
+          end={{
+            x: 1,
+            y: 1,
+          }}
+          style={styles.list_bg}
+        ></LinearGradient>
+        {/* <LinearGradient
+          colors={['rgba(247,114,172,0.2)', 'rgba(247,68,92,0)']}
+          style={styles.list_lamp}
+        ></LinearGradient> */}
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+          }}
+        >
           {allGuesses.map((guess, index) => (
             <ListItem guess={guess} index={index} key={guess} />
           ))}
@@ -99,11 +166,63 @@ export const GameScreenComponent = ({
 };
 
 const ListItem = ({ guess, index }) => {
-  let color = index === 0 ? 'yellow' : 'white';
+  let active = index === 0;
+  let color = active ? 'rgba(247,230,64,.6)' : 'rgba(120,111,31,.7)';
+  let bgColor = active ? 'rgba(20,32,56,0)' : 'rgbargba(89,139,247,0)';
+
+  const activeNumber = useRef(new Animated.Value(0)).current;
+
+  const otherNumbers = useRef(new Animated.Value(0)).current;
+
+  const fade1 = () => {
+    Animated.timing(activeNumber, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start(() => fade2());
+  };
+
+  const fade2 = () => {
+    Animated.timing(activeNumber, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => fade3());
+  };
+
+  const fade3 = () => {
+    Animated.timing(activeNumber, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const activeNumberFade = () => {
+    fade1();
+    fade2();
+    fade3();
+  };
+
+  useEffect(() => {
+    if (active) {
+      fade1();
+      fade2();
+      fade3();
+    }
+  });
+
+  console.log(index, 'Rendered < > item', otherNumbers);
 
   return (
-    <View style={styles.listItem}>
+    <Animated.View
+      style={{
+        ...styles.listItem,
+        backgroundColor: bgColor,
+        opacity: activeNumber,
+      }}
+    >
       <Text style={{ ...styles.text, color: color }}>{guess}</Text>
-    </View>
+    </Animated.View>
   );
 };

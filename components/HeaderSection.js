@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
 export const HeaderSection = ({ title }) => {
   return (
@@ -11,16 +11,20 @@ export const HeaderSection = ({ title }) => {
 
 const styles = StyleSheet.create({
   headerSection: {
-    position: 'relative',
+    position: 'absolute',
     width: '100%',
-    height: 90,
-    paddingTop: 20,
+    height: 50,
+    paddingTop: Dimensions.get('window').height / 55,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f7287b',
+    backgroundColor: 'rgba(235,9,50,0)',
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
+    top: 25,
+    zIndex: 2,
   },
   headerTitle: {
-    color: '#F7E640',
+    color: 'rgba(247,230,64,1)',
     fontSize: 20,
     fontFamily: 'press-start',
   },
